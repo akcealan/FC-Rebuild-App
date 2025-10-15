@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Rebuild App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="RB LOGOS 1.png">
+</head>
+<body>
+    <div class="container">
+        <div class="main-menu">
+            <img src="RB LOGOS 1.png" alt="FC Rebuild Logo" class="site-logo" />
+            <h1>FC Rebuild App</h1>
+            <button id="startRebuild">Rebuild Yap</button>
+            <button id="calculatePoints">Rebuild Puan Hesapla</button>
+        </div>
+
+        <!-- Puan Hesaplayıcı Ekranı -->
+        <div id="pointsScreen" class="hidden">
+            <div class="points-header">
+                <img src="RB LOGOS 1.png" alt="FC Rebuild Logo" class="site-logo-sm" />
+                <h2>FC Rebuild Puan Hesaplayıcı</h2>
+            </div>
+            <div class="points-grid">
+                <!-- Sol: Formlar -->
+                <div class="points-forms">
+                    <!-- Lig -->
+                    <section class="pc-card">
+                        <h3>Lig</h3>
+                        <div class="pc-field">
+                            <label for="pc_league_place">Sıralama</label>
+                            <select id="pc_league_place">
+                                <option value="" selected>Seçiniz</option>
+                                <option value="1">Birinci</option>
+                                <option value="2">İkinci</option>
+                                <option value="3">Üçüncü</option>
+                                <option value="4">Dördüncü</option>
+                            </select>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Gol Krallığı</label>
+                                <select id="pc_league_golden_boot">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_league_gb_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_league_gb_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Asist Krallığı</label>
+                                <select id="pc_league_assist">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_league_as_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_league_as_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Kaleci Krallığı</label>
+                                <select id="pc_league_gk">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_league_gk_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_league_gk_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label for="pc_league_avg">Averaj + Puan</label>
+                                <input id="pc_league_avg" type="number" step="1" value="0" />
+                            </div>
+                            <div class="pc-field">
+                                <label for="pc_league_eff">Verim</label>
+                                <input id="pc_league_eff" type="number" step="1" value="0" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Kupalar -->
+                    <section class="pc-card">
+                        <h3>Kupalar (FA & Carabao)</h3>
+                        <div class="pc-field">
+                            <label for="pc_cups_stage">Seviye</label>
+                            <select id="pc_cups_stage">
+                                <option value="" selected>Seçiniz</option>
+                                <option value="W">Birinci</option>
+                                <option value="RU">İkinci</option>
+                                <option value="SF">Yarı Final</option>
+                                <option value="QF">Çeyrek Final</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <!-- UEL -->
+                    <section class="pc-card">
+                        <h3>Avrupa Ligi (UEL)</h3>
+                        <div class="pc-field">
+                            <label for="pc_uel_participate">Şampiyonlar liginden elendin mi?</label>
+                            <select id="pc_uel_participate">
+                                <option value="0">Hayır</option>
+                                <option value="1">Evet</option>
+                            </select>
+                        </div>
+                        <div class="pc-field">
+                            <label for="pc_uel_stage">Seviye</label>
+                            <select id="pc_uel_stage">
+                                <option value="" selected>Seçiniz</option>
+                                <option value="W">Birinci</option>
+                                <option value="RU">İkinci</option>
+                                <option value="SF">Yarı Final</option>
+                                <option value="QF">Çeyrek Final</option>
+                                <option value="R16">Son16</option>
+                            </select>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Gol Krallığı</label>
+                                <select id="pc_uel_gb">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_uel_gb_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_uel_gb_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Asist Krallığı</label>
+                                <select id="pc_uel_as">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_uel_as_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_uel_as_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Kaleci Krallığı</label>
+                                <select id="pc_uel_gk">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_uel_gk_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_uel_gk_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-field">
+                            <label for="pc_uel_elim">Elendiğin Takım Sıralaması</label>
+                            <select id="pc_uel_elim">
+                                <option value="" selected>Seçiniz</option>
+                                <option value="1">Birinci</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <!-- UCL -->
+                    <section class="pc-card">
+                        <h3>Şampiyonlar Ligi (UCL)</h3>
+                        <div class="pc-field">
+                            <label for="pc_ucl_stage">Seviye</label>
+                            <select id="pc_ucl_stage">
+                                <option value="" selected>Seçiniz</option>
+                                <option value="W">Birinci</option>
+                                <option value="RU">İkinci</option>
+                                <option value="SF">Yarı Final</option>
+                                <option value="QF">Çeyrek Final</option>
+                                <option value="R16">Son16</option>
+                            </select>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Gol Krallığı</label>
+                                <select id="pc_ucl_gb">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_ucl_gb_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_ucl_gb_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Asist Krallığı</label>
+                                <select id="pc_ucl_as">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_ucl_as_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_ucl_as_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label>Kaleci Krallığı</label>
+                                <select id="pc_ucl_gk">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                    <option value="2">İkinci</option>
+                                    <option value="3">Üçüncü</option>
+                                </select>
+                            </div>
+                            <div class="pc-field pc-split">
+                                <label for="pc_ucl_gk_split">Bölüşme sayısı <span class="info" data-tip="Bölüşme sayısı kişisinde kendi oyuncunuzu da sayın. Örneğin sizin haricinizde 1 kişi daha varsa 2 yazın. Hiç kimseyle bölüşmediyseniz 1 yazın.">i</span></label>
+                                <input id="pc_ucl_gk_split" type="number" min="1" step="1" value="1" />
+                            </div>
+                        </div>
+                        <div class="pc-row">
+                            <div class="pc-field">
+                                <label for="pc_ucl_group">İlk Aşama Sıralaması</label>
+                                <select id="pc_ucl_group">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">İlk 4</option>
+                                </select>
+                            </div>
+                            <div class="pc-field">
+                                <label for="pc_ucl_elim">Elendiğin Takım Sıralaması</label>
+                                <select id="pc_ucl_elim">
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="1">Birinci</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sağ: Özet -->
+                <aside class="points-summary">
+                    <h3>Toplam Puan</h3>
+                    <div class="total" id="pc_total">0</div>
+                    <ul class="breakdown" id="pc_breakdown"></ul>
+                </aside>
+            </div>
+
+            <!-- Alt bar -->
+            <div class="points-actions">
+                <button id="pc_reset" type="button">Formu Sıfırla</button>
+                <button id="pc_print" type="button">Yazdır/PDF</button>
+            </div>
+        </div>
+
+        <div id="playerCount" class="hidden">
+            <div class="count-card" role="dialog" aria-labelledby="countTitle" aria-describedby="countDesc">
+                <img src="RB LOGOS 1.png" alt="FC Rebuild Logo" class="site-logo-sm logo-center" />
+                <h2 id="countTitle" class="count-title">Kaç oyuncu katılacak?</h2>
+                <p id="countDesc" class="count-subtitle">Oyuncu sayısını seç ve başlayalım.</p>
+
+                <div class="count-picker" aria-live="polite">
+                    <button type="button" id="playerDecrement" class="count-btn" aria-label="Bir azalt">−</button>
+                    <input type="number" id="playerNumber" min="1" inputmode="numeric" pattern="[0-9]*" aria-label="Oyuncu sayısı" />
+                    <button type="button" id="playerIncrement" class="count-btn" aria-label="Bir artır">+</button>
+                </div>
+
+                <button id="startGame" class="count-start" type="button">Başla</button>
+                <p class="count-hint">İpucu: Klavyeden sayı yazabilir ya da + / − butonlarını kullanabilirsin.</p>
+            </div>
+        </div>
+
+        <div id="gameScreen" class="hidden">
+            <div class="split-screen">
+                <!-- Sol taraf - Çark bölümü -->
+                <div class="wheel-section">
+                    <h3>Çark Çevirme</h3>
+                    <div class="wheel-container">
+                        <canvas id="mainWheel"></canvas>
+                        <button id="spinWheel">Çark Çevir</button>
+                    </div>
+                    <div id="wheelResult"></div>
+                </div>
+
+                <!-- Sağ taraf - Kadro kurma bölümü -->
+                <div class="squad-section">
+                    <h3>Kadro Kurma</h3>
+                    <div class="squad-info">
+                        <h4 id="squadTitle">1. Oyuncu Kadrosu</h4>
+                        <div class="squad-actions">
+                            <button id="nextPlayerBtn" type="button">Sıradaki Oyuncu</button>
+                            <button id="showAllPlayersBtn" type="button">Tüm Oyuncular</button>
+                        </div>
+                    </div>
+                    <div class="squad-builder">
+                        <div class="position-panel">
+                            <div class="panel-actions">
+                                <button id="clearSquadBtn" type="button">Kadro Sıfırla</button>
+                            </div>
+                            <h4 id="positionsHeader" class="hidden">Pozisyonlar</h4>
+                            <div class="position-list">
+                                <div class="position-group">
+                                    <h5>Kaleci</h5>
+                                    <div class="position-item" data-position="KL">
+                                        <h4>Kaleci</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input-wrapper">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="KL" aria-label="Oyuncu adı girin">
+                                                <button type="button" class="add-player" data-position="KL" aria-label="Oyuncu ekle">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                </div>
+                                <div class="position-group">
+                                    <h5>Defans</h5>
+                                    <div class="position-item" data-position="STP">
+                                        <h4>Stoper</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="STP">
+                                                <button type="button" class="add-player" data-position="STP">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                    <div class="position-item" data-position="SĞB">
+                                        <h4>Sağ Bek</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="SĞB">
+                                                <button type="button" class="add-player" data-position="SĞB">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                    <div class="position-item" data-position="SLB">
+                                        <h4>Sol Bek</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="SLB">
+                                                <button type="button" class="add-player" data-position="SLB">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                </div>
+                                <div class="position-group">
+                                    <h5>Orta Saha</h5>
+                                    <div class="position-item" data-position="MDO">
+                                        <h4>Merkez Defansif</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="MDO">
+                                                <button type="button" class="add-player" data-position="MDO">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                    <div class="position-item" data-position="MO">
+                                        <h4>Merkez Orta</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="MO">
+                                                <button type="button" class="add-player" data-position="MO">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                    <div class="position-item" data-position="MOO">
+                                        <h4>Merkez Ofansif</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="MOO">
+                                                <button type="button" class="add-player" data-position="MOO">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                </div>
+                                <div class="position-group">
+                                    <h5>Forvet</h5>
+                                    <div class="position-item" data-position="SĞK">
+                                        <h4>Sağ Kanat</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="SĞK">
+                                                <button type="button" class="add-player" data-position="SĞK">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                    <div class="position-item" data-position="SLK">
+                                        <h4>Sol Kanat</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="SLK">
+                                                <button type="button" class="add-player" data-position="SLK">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                    <div class="position-item" data-position="ST">
+                                        <h4>Santrafor</h4>
+                                        <div class="player-input-container">
+                                            <div class="player-input">
+                                                <input type="text" class="player-name" placeholder="Oyuncu adı" data-position="ST">
+                                                <button type="button" class="add-player" data-position="ST">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="added-players"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="wheel.js"></script>
+    <script src="field.js"></script>
+    <script src="squad.js"></script>
+    <script src="squadManager.js"></script>
+    <script src="main.js"></script>
+    
+    <!-- Sol alt sabit: Ana Sayfa -->
+    <button id="goHomeBtn" type="button" class="floating-left">Ana Sayfa</button>
+  </body>
+</html>
